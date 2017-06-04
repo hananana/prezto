@@ -91,7 +91,7 @@ function git-current-branch-name() {
 }
 
 # ブランチを絞り込む
-function git-branch(){
+function git_branch(){
     local branch=$(git branch -a | peco | tr -d ' ' | tr -d '*')
     if [ -n "$branch" ]; then
         if [ -n "$LBUFFER" ]; then
@@ -105,18 +105,18 @@ function git-branch(){
 }
 
 #アプリを終了させる
-function kill-process () {
+function kill_process () {
     ps -ef | peco | awk '{ print $2 }' | xargs kill
     zle clear-screen
 }
 
 # ハッシュを絞り込む
-function git-hash(){                                    
+function git_hash(){                                    
     git log --oneline --branches | peco | awk '{print $1}'
 }  
 
 # pathをみやすく
-function show-path(){
+function show_path(){
       echo -e ${PATH//:/'\n'}
 }
 
@@ -125,8 +125,45 @@ function graph {
 	git log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)― %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 }
 
+# gitのrootに移動
+function cd_gitroot() {
+
+  local option OPTARG OPTIND
+  while getopts ':h' option; do
+    case $option in
+      h)
+        cdgitroot_print_usage
+        return 0
+        ;;
+      :)
+        cdgitroot_print_error "option requires an argument -- $OPTARG"
+        return 1
+        ;;
+      *)
+        cdgitroot_print_error "invalid option -- $OPTARG"
+        return 1
+        ;;
+    esac
+  done
+  shift $(expr $OPTIND - 1)
+
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+    cdgitroot_print_error "Not in a git repository"
+    return 1
+  fi
+
+  local relative_path="$1"
+  local root_path=$(git rev-parse --show-toplevel)
+
+  if [ -n "$relative_path" ]; then
+    cd "$root_path/$relative_path"
+  else
+    cd "$root_path"
+  fi
+}
+
 # ヒストリを絞り込む
-function peco-select-history() {
+function peco_select_history() {
     local tac
     if which tac > /dev/null; then
         tac="tac"
@@ -139,27 +176,8 @@ function peco-select-history() {
     CURSOR=$#BUFFER
     zle clear-screen
 }
-zle -N peco-select-history
-bindkey '^r' peco-select-history 
-
-# 解凍
-function flower_extract() {
-    case $1 in
-        *.tar.gz|*.tgz) tar xzvf $1;;
-        *.tar.xz) tar Jxvf $1;;
-        *.zip) unzip $1;;
-        *.lzh) lha e $1;;
-        *.tar.bz2|*.tbz) tar xjvf $1;;
-        *.tar.Z) tar zxvf $1;;
-        *.gz) gzip -d $1;;
-        *.bz2) bzip2 -dc $1;;
-        *.Z) uncompress $1;;
-        *.tar) tar xvf $1;;
-        *.arj) unarj $1;;
-    esac
-}
-alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
-
+zle -N peco_select_history
+bindkey '^r' peco_select_history 
 # -------------------------------------
 # zgen
 # -------------------------------------
