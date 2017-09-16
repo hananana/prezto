@@ -12,13 +12,7 @@ fi
 
 # Customize to your needs...
 
-export EDITOR='vim'
-
-# -------------------------------------
-# Python
-# -------------------------------------
-eval "$(pyenv init - --no-rehash)"
-eval "$(pyenv virtualenv-init - --no-rehash)"
+export EDITOR='nvim'
 
 # too slow
 # -------------------------------------
