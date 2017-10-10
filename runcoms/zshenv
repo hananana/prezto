@@ -38,4 +38,9 @@ export GTAGSLABEL=pygments
 # brew caskでいれたjavaの場所virtualMachine?のナンバーを指定
 # -------------------------------------
 # export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+
+case ${OSTYPE} in
+    darwin*)
+        export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+        ;;
+esac
