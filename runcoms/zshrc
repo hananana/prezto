@@ -12,7 +12,7 @@ fi
 
 # Customize to your needs...
 
-export EDITOR='nvim'
+export EDITOR='vim'
 
 # too slow
 # -------------------------------------
