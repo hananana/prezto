@@ -20,8 +20,16 @@ export PATH=$PATH":$ANDROID_HOME/platform-tools"
 export PATH=$PATH":$ANDROID_HOME/tools"
 
 # go
-export GOPATH="$HOME"
-export PATH=$PATH:$GOPATH/bin
+case ${OSTYPE} in
+    darwin*)
+        export GOPATH="$HOME"
+        export PATH=$PATH:$GOPATH/bin
+        ;;
+    linux*)
+        export GOPATH="/media/sf_vmshare/"
+        export PATH=$PATH:$GOPATH/bin
+        ;;
+esac
 
 # python
 export PYENV_ROOT="${HOME}/.pyenv"
