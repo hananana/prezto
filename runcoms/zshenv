@@ -31,10 +31,6 @@ case ${OSTYPE} in
         ;;
 esac
 
-# python
-export PYENV_ROOT="${HOME}/.pyenv"
-export PATH=${PYENV_ROOT}/bin:$PATH
-
 # my script
 export PATH=$PATH:$HOME/.dotfiles/bin
 
