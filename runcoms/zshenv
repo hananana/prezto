@@ -26,7 +26,7 @@ case ${OSTYPE} in
         export PATH=$PATH:$GOPATH/bin
         ;;
     linux*)
-        export GOPATH="/media/sf_vmshare/"
+        export GOPATH="/mnt/hgfs/share"
         export PATH=$PATH:$GOPATH/bin
         ;;
 esac
