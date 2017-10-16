@@ -1,3 +1,5 @@
 # DO THIS
 
-git clone --recursive https://github.com/hananana/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+``` 
+$ curl -L https://raw.githubusercontent.com/hananana/prezto/master/install.sh | bash
+```

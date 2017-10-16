@@ -86,7 +86,7 @@ function git-current-branch-name() {
 
 # ブランチを絞り込む
 function git_branch(){
-    local branch=$(git branch -a | peco | tr -d ' ' | tr -d '*')
+    local branch=$(git branch -a | fzy | tr -d ' ' | tr -d '*')
     if [ -n "$branch" ]; then
         if [ -n "$LBUFFER" ]; then
             local new_left="${LBUFFER%\ } $branch"
@@ -100,13 +100,13 @@ function git_branch(){
 
 #アプリを終了させる
 function kill_process () {
-    ps -ef | peco | awk '{ print $2 }' | xargs kill
+    ps -ef | fzy | awk '{ print $2 }' | xargs kill
     zle clear-screen
 }
 
 # ハッシュを絞り込む
 function git_hash(){                                    
-    git log --oneline --branches | peco | awk '{print $1}'
+    git log --oneline --branches | fzy | awk '{print $1}'
 }  
 
 # pathをみやすく
@@ -157,7 +157,7 @@ function cd_gitroot() {
 }
 
 # ヒストリを絞り込む
-function peco_select_history() {
+function select_history() {
     local tac
     if which tac > /dev/null; then
         tac="tac"
@@ -166,12 +166,12 @@ function peco_select_history() {
     fi
     BUFFER=$(\history -n 1 | \
         eval $tac | \
-        peco --query "$LBUFFER")
+        fzy --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle clear-screen
 }
-zle -N peco_select_history
-bindkey '^r' peco_select_history 
+zle -N select_history
+bindkey '^r' select_history 
 
 # -------------------------------------
 # zgen
