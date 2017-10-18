@@ -27,9 +27,14 @@ export EDITOR='vim'
 # -------------------------------------
 
 # ls
-alias ls="ls -GF"
-alias l='ls -lah'
-alias la='ls -lAh'
+if [ -x "`which colorls`" ]; then
+    alias ls="colorls -l -a -sd"
+    alias l="colorls -l -a -sd"
+else
+    alias ls="ls -GF"
+    alias l='ls -lah'
+    alias la='ls -lAh'
+fi
 
 # git
 alias g='git'
