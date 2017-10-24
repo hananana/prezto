@@ -56,6 +56,17 @@ alias gst='git status'
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
 
+fb() {
+    local branches branch
+    branches=$(git branch -vv) &&
+    branch=$(echo "$branches" | fzy) &&
+    git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+fbr() {
+	echo "not implemented"
+}
+
 # tree
 alias tree="tree -NC" # N: 文字化け対策, C:色をつける
 
